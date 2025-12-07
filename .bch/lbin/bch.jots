@@ -1,4 +1,17 @@
 #!/usr/bin/env bash
 
-uv run ${BCH_JOTS__root}/.venv/bin/bch-jots $*
+this=$(readlink ${BASH_SOURCE[0]})
 
+[ ! "${BASH_SOURCE[0]}" == "$0" ] && { . ${this}.d/.source.sh ; return $? ; }
+[ -f ${this}.d/$1               ] && {   ${this}.d/$@         ; exit   $? ; }
+
+case .$1 in
+    .|.-h|.--help)
+        echo internal commands:
+        for cmd in $(ls ${this}.d 2>/dev/null); do
+            echo "    -- bch.jots $cmd"
+        done
+        ;;
+esac
+
+uv run ${BCH_JOTS__root}/.venv/bin/bch-jots $*
