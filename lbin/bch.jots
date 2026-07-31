@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+this=$(readlink ${BASH_SOURCE[0]})
+uv run $(dirname $(dirname $this))/.venv/bin/bch-jots $*
